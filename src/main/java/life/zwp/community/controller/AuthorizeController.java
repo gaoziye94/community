@@ -8,9 +8,9 @@ import life.zwp.community.provider.GithubProvider;
 import life.zwp.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -36,10 +36,15 @@ public class AuthorizeController {
     @Value("${github.redirect_uri}")
     private String redirectUri;
 
-    @GetMapping("callback")
+    @GetMapping("/account/github/login")
+    public String githubLogin() {
+        return "redirect:https://github.com/login/oauth/authorize?client_id=eaf760769d322e005e06&redirect_uri=http://localhost:9090/callback&scope=user&state=1";
+    }
+
+
+    @GetMapping("/callback")
     public String callback(@RequestParam("code") String code,
                            @RequestParam("state") String state,
-                           HttpServletRequest request,
                            HttpServletResponse response){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
@@ -56,6 +61,7 @@ public class AuthorizeController {
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setAccountId(String.valueOf(userInfo.getId()));
+            user.setBio(userInfo.getBio());
             user.setName(userInfo.getName());
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());

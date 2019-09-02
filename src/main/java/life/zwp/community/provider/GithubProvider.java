@@ -31,10 +31,10 @@ public class GithubProvider {
                     .build();
             try (Response response = client.newCall(request).execute()) {
                 String string = response.body().string();
-                System.out.println("string:=========="+accessToken);
+//                System.out.println("string:=========="+accessToken);
                 String[] split = (string.split("&")[0]).split("=");
                 accessToken = split[1];
-                System.out.println("accessToken:=========="+accessToken);
+//                System.out.println("accessToken:=========="+accessToken);
             } catch (IOException e) {
                 e.printStackTrace();
             }
