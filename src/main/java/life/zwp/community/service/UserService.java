@@ -16,4 +16,13 @@ public interface UserService {
      * @return
      */
     User findByToken(String token);
+
+
+    /**
+     * 更新用户
+     * @param user
+     */
+    void update(User user);
+
+    User findByAccountId(String accountId);
 }

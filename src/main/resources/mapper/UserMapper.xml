@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="life.zwp.community.mapper.UserMapper">
+    <resultMap type="life.zwp.community.model.User" id="user">
+        <id column="id" property="id" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="account_id" property="accountId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="head_url" property="headUrl" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="bio" property="bio" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="token" property="token" javaType="java.lang.String" jdbcType="CHAR"/>
+        <id column="gmt_create" property="gmtCreate" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="gmt_modified" property="gmtModified" javaType="java.lang.Long" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="life.zwp.community.model.User">
+        insert into user (name,account_id,head_url,token,bio,gmt_create,gmt_modified) values (#{name},#{accountId},#{headUrl},#{token},#{bio},#{gmtCreate},#{gmtModified})
+    </insert>
+
+    <update id="update"  parameterType="life.zwp.community.model.User">
+        UPDATE user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null">name=#{name},</if>
+            <if test="headUrl!=null">head_url=#{headUrl},</if>
+            <if test="bio!=null">bio=#{bio},</if>
+            <if test="token!=null">token=#{token},</if>
+            <if test="gmtCreate!=null">gmt_create=#{gmtCreate},</if>
+            <if test="gmtModified!=null">gmt_modified=#{gmtModified},</if>
+        </trim>
+        WHERE account_id=#{accountId}
+    </update>
+    <select id="findByToken"  resultType="user">
+        select id,name,account_id,head_url,token,bio,gmt_create,gmt_modified from user where token = #{token}
+    </select>
+    <select id="findByCreator"  resultType="user">
+        select id,name,account_id,head_url,token,bio,gmt_create,gmt_modified from user where id = #{creator}
+    </select>
+    <select id="findByAccountId"  resultType="user">
+       select id,name,account_id,head_url,token,bio,gmt_create,gmt_modified from user where account_id = #{accountId}
+    </select>
+
+</mapper>

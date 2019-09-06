@@ -1,17 +1,45 @@
 package life.zwp.community.mapper;
 
 import life.zwp.community.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
 public interface UserMapper {
 
-    @Insert("insert into user (name,account_id,token,bio,gmt_create,gmt_modified) values (#{name},#{accountId},#{token},#{bio},#{gmtCreate},#{gmtModified})")
+
+    /**
+     * 新增
+     * @param user
+     */
     void insert(User user);
 
-    @Select("select id,name,account_id,token,bio,gmt_create,gmt_modified from user where token = #{token}")
-    User findByToken(@Param("token") String token);
+    /**
+     * 查询用户，根据token
+     * @param token
+     * @return
+     */
+    User findByToken(String token);
+
+    /**
+     * 根据创建者id，查询这个用户
+     * @param creator
+     * @return
+     */
+    User findByCreator(Integer creator);
+
+    /**
+     * 根据创建者AccountId，查询这个用户
+     * @param accountId
+     * @return
+     */
+    User findByAccountId(String accountId);
+
+    /**
+     * 更新用户，根据accountId
+     * @param user
+     */
+    void update(User user);
+
 }

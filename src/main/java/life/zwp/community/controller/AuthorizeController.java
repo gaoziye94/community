@@ -9,6 +9,7 @@ import life.zwp.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +46,8 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam("code") String code,
                            @RequestParam("state") String state,
-                           HttpServletResponse response){
+                           HttpServletResponse response,
+                           Model model){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
@@ -55,23 +57,38 @@ public class AuthorizeController {
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser userInfo = githubProvider.getUserInfo(accessToken);
      //   System.out.println(userInfo.getName()+userInfo.getId()+userInfo.getBio());
+        String token = UUID.randomUUID().toString();
         if(userInfo !=null){
             //登录成功，写cookie和session.写入数据库
+            //查看数据库中有没有这个人 根据 AccountId，唯一的，如果有，就更新token时间，没有就新增
             User user = new User();
-            String token = UUID.randomUUID().toString();
-            user.setToken(token);
-            user.setAccountId(String.valueOf(userInfo.getId()));
-            user.setBio(userInfo.getBio());
-            user.setName(userInfo.getName());
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
-            userService.insert(user);
+//            user.setAccountId(String.valueOf(userInfo.getId()));
+            User user1 = userService.findByAccountId(String.valueOf(userInfo.getId()));
+            if(user1 !=null){
+                //更新这个用户信息，token
+                user1.setToken(token);
+                user1.setHeadUrl(userInfo.getAvatarUrl());
+                user1.setName(userInfo.getName());
+                user1.setBio(userInfo.getBio());
+                user1.setGmtModified(System.currentTimeMillis());
+                userService.update(user1);
+            } else {
+                user.setToken(token);
+                user.setAccountId(String.valueOf(userInfo.getId()));
+                user.setHeadUrl(userInfo.getAvatarUrl());
+                user.setBio(userInfo.getBio());
+                user.setName(userInfo.getName());
+                user.setGmtCreate(System.currentTimeMillis());
+                user.setGmtModified(user.getGmtCreate());
+                userService.insert(user);
+            }
           //  request.getSession().setAttribute("user",userInfo);
             //写入cookie
             response.addCookie(new Cookie("token",token));
             return "redirect:/";
         } else {
             // 登录失败，
+            model.addAttribute("error","登录失败");
             return "redirect:/";
         }
     }
