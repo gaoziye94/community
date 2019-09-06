@@ -7,9 +7,9 @@ import java.util.List;
 
 
 @Data
-public class PaginationDTO {
+public class PaginationDTO<T> {
     /** 内容 */
-    private List<QuestionDTO> content = new ArrayList<QuestionDTO>();
+    private List<T> content = new ArrayList<T>();
     /**是否展示上一页按钮**/
     private boolean showPrevPage;
     /**是否展示下一页按钮**/
