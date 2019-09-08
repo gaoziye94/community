@@ -22,7 +22,6 @@ public class IndexController extends BaseController{
     public String index(HttpServletRequest request, HttpServletResponse response, Model model,
                         @RequestParam(value = "page",defaultValue = "1") Integer page,
                         @RequestParam(value = "size",defaultValue = "10") Integer size){
-        getUserFormSession(request);
         //获取首页问题列表,和发布用户头像
         //userId =0 ,查询所有人的问题
         PaginationDTO paginationDTO =  questionService.findQuestion(page,size);

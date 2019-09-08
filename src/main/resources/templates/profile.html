@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的问题</title>
+    <title th:text="${sectionName}"></title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
@@ -15,7 +15,7 @@
 <div class="container-fluid main container">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12">
-            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>我的问题</h2>
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true" th:text="${sectionName}"></span></h2>
             <hr/>
             <!--内容列表-->
             <div class="media" th:if="${paginationDTO != null}" th:each="questionDTO:${paginationDTO.content}">
@@ -58,11 +58,14 @@
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6 ">
             <div class="list-group" style="    margin: 30px 0;">
-                <a href="/profile/questions" class="list-group-item active">
+                <a href="/profile/questions" class="list-group-item" th:classappend="${section == 'questions'}? 'active' : ''">
                     <span class="badge" th:text="${paginationDTO.totalCount}"></span>
                     我的问题
                 </a>
-                <a href="#" class="list-group-item"><span class="badge">14</span>最新回复</a>
+                <a href="/profile/replies" class="list-group-item" th:classappend="${section == 'replies'}? 'active' : ''">
+                    <span class="badge">14</span>
+                    最新回复
+                </a>
             </div>
         </div>
         </div>

@@ -30,7 +30,6 @@ public class PublishController extends BaseController{
     @GetMapping("")
     public String publish(HttpServletRequest request, HttpServletResponse response,
                         Model model,  @RequestParam(value = "id",defaultValue = "0") Integer id){
-        getUserFormSession(request);
         //根据id 回显问题
         Question question = questionService.findQuestionById(id);
         model.addAttribute("question",question);
