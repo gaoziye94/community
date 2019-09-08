@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 我的问题 -Controller
  */
-@Controller("questionController")
+@Controller("profileController")
 @RequestMapping("/profile")
 public class ProfileController extends BaseController{
 

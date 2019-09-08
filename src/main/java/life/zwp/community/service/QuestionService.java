@@ -52,4 +52,11 @@ public interface QuestionService {
      * @param question
      */
     void update(Question question);
+
+    /**
+     * 根据问题id,查询问题，并返回问题发布人
+     * @param id
+     * @return
+     */
+    QuestionDTO findQuestionDTOById(Integer id);
 }

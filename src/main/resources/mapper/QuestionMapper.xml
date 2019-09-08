@@ -38,6 +38,16 @@
         WHERE id=#{id}
     </update>
 
+    <select id="findQuestionMapById" parameterType="Integer" resultType="java.util.Map">
+        SELECT
+            q.*,
+            u.*
+        FROM
+            question q
+        LEFT JOIN `user` u ON q.creator = u.id
+        WHERE
+            q.id = #{id}
+    </select>
 
 
 </mapper>

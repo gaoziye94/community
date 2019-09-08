@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 问题-mapper
@@ -61,4 +62,11 @@ public interface QuestionMapper {
      * @param question
      */
     void update(Question question);
+
+    /**
+     * 查询问题，并返回发布人
+     * @param id
+     * @return
+     */
+    Map<Object, Object> findQuestionMapById(Integer id);
 }

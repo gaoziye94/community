@@ -29,3 +29,4 @@ body {
     margin: auto !important;
     max-width: 2500px !important;
 }
+a:focus{text-decoration: none}

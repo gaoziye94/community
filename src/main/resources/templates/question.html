@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问题详情</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/jquery.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{head :: headnavbar}"></div>
+<div class="container-fluid main container">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 rightBox">
+            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h2>
+            <span th:text="${name}"></span>
+        </div>
+        <div class="col-lg-3 col-md-3 aw-side-bar hidden-xs hidden-sm">
+            <h3>问题发起指南</h3>
+            • 问题标题: 请用精简的语言描述您发布的问题，不超过25字 <br>
+            • 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料<br>
+            • 选择标签: 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br>
+        </div>
+    </div>
+</div>
+</body>
+</html>

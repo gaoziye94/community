@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service("publishServiceImpl")
 @Transactional
@@ -88,6 +89,13 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void update(Question question) {
         questionMapper.update(question);
+    }
+
+    @Override
+    public QuestionDTO findQuestionDTOById(Integer id) {
+        QuestionDTO questionDTO = new QuestionDTO();
+        Map<Object,Object> questionDTOMap = questionMapper.findQuestionMapById(id);
+        return questionDTO;
     }
 
 }

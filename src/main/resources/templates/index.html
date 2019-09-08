@@ -42,7 +42,7 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading" th:text="${QuestionDTO.question.title}"></h4>
+                        <h4 class="media-heading"><a  th:href="@{/question(id=${QuestionDTO.question.id})}" th:text="${QuestionDTO.question.title}"></a></h4>
                        <span th:text="${QuestionDTO.question.description}"></span><br>
                         <span class="text-desc">
                             <span th:text="${QuestionDTO.question.commentCount}"></span> 个评论 • <span th:text="${QuestionDTO.question.viewCount}"></span>  次浏览
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-12 col-sm-12 ">
+            <div class="col-lg-3 col-md-3 aw-side-bar hidden-xs hidden-sm">
                 <h3>最热话题</h3>
             </div>
         </div>
