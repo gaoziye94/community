@@ -28,8 +28,12 @@ public class PublishController extends BaseController{
     @Autowired
     private UserService userService;
     @GetMapping("")
-    public String publish(HttpServletRequest request, HttpServletResponse response, Model model){
+    public String publish(HttpServletRequest request, HttpServletResponse response,
+                        Model model,  @RequestParam(value = "id",defaultValue = "0") Integer id){
         getUserFormSession(request);
+        //根据id 回显问题
+        Question question = questionService.findQuestionById(id);
+        model.addAttribute("question",question);
         return "publish";
     }
 
@@ -39,15 +43,32 @@ public class PublishController extends BaseController{
      */
     @PostMapping("")
     public String create(
+            @RequestParam("id") Integer id,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("tags") String tags,
             HttpServletRequest request,
             Model model
     ){
-        model.addAttribute("title",title);
-        model.addAttribute("description",description);
-        model.addAttribute("tags",tags);
+        User user = getUser(request);
+        if(user ==null){
+            model.addAttribute("error","用户未登录");
+            return "publish";
+        }
+        //当前用户id
+        int creator = user.getId();
+        Question question = new Question();
+        if(id ==null){
+            question.setTitle(title);
+            question.setDescription(description);
+            question.setTags(tags);
+            //新增
+        } else {
+            //修改
+            //不为空，为编辑,先查询出这个问题
+            question = questionService.findQuestionById(id);
+        }
+        model.addAttribute("question",question);
         if(title ==null || title == ""){
             model.addAttribute("error","标题不能为空");
             return "publish";
@@ -60,7 +81,27 @@ public class PublishController extends BaseController{
             model.addAttribute("error","标签不能为空");
             return "publish";
         }
-        int creator = 0;
+        //判断是新增还是编辑。有无id
+        if(id ==null){
+            //新增
+            question.setCreator(creator);
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionService.create(question);
+        } else {
+            //不为空，为编辑,先查询出这个问题
+            question = questionService.findQuestionById(id);
+            question.setTitle(title);
+            question.setDescription(description);
+            question.setTags(tags);
+            question.setGmtModified(System.currentTimeMillis());
+            questionService.update(question);
+        }
+
+        return "redirect:/";
+    }
+
+    private User getUser(HttpServletRequest request) {
         // 获取登录人
         User user = new User();
         Cookie[] cookies = request.getCookies();
@@ -76,19 +117,6 @@ public class PublishController extends BaseController{
                 }
             }
         }
-        if(user ==null){
-            model.addAttribute("error","用户未登录");
-            return "publish";
-        }
-        creator = user.getId();
-        Question question = new Question();
-        question.setTitle(title);
-        question.setDescription(description);
-        question.setTags(tags);
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
-        question.setCreator(creator);
-        questionService.create(question);
-        return "redirect:/";
+        return user;
     }
 }

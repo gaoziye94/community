@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="life.zwp.community.mapper.QuestionMapper">
+    <resultMap type="life.zwp.community.model.Question" id="question">
+        <id column="id" property="id" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="title" property="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="description" property="description" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="creator" property="creator"  javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="comment_count" property="commentCount" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="view_count" property="viewCount" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="like_count" property="likeCount" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="gmt_create" property="gmtCreate" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="gmt_modified" property="gmtModified" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="tags" property="tags"  javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="count" parameterType="Integer" resultType="Integer">
+        select count(1) from question
+        <where>
+            <if test="creator!=0">
+                and creator = #{creator}
+            </if>
+        </where>
+    </select>
+
+    <update id="update"  parameterType="life.zwp.community.model.Question">
+        UPDATE question
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title!=null">title=#{title},</if>
+            <if test="description!=null">description=#{description},</if>
+            <if test="gmtModified!=null">gmt_modified=#{gmtModified},</if>
+            <if test="tags!=null">tags=#{tags},</if>
+            <if test="commentCount!=null">comment_count=#{commentCount},</if>
+            <if test="viewCount!=null">view_count=#{viewCount},</if>
+            <if test="likeCount!=null">like_count=#{likeCount},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+
+
+</mapper>

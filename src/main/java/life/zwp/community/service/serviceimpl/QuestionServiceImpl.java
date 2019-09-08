@@ -39,8 +39,8 @@ public class QuestionServiceImpl implements QuestionService {
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         List<Question> questions = findAll(page, size);
 //        总数据
-        Integer totalCount = questionMapper.count();
-        Integer creator;
+        Integer creator = 0;
+        Integer totalCount = questionMapper.count(creator);
         QuestionDTO questionDTO ;
         User user;
         PaginationDTO paginationDTO = new PaginationDTO();
@@ -57,4 +57,37 @@ public class QuestionServiceImpl implements QuestionService {
         paginationDTO.setPaginationDTO(totalCount,page,size);
         return paginationDTO;
     }
+
+    @Override
+    public PaginationDTO findQuestionByUserId(Integer page, Integer size, Integer userId) {
+        //        总数据
+        Integer creator = userId;
+        Integer totalCount = questionMapper.count(creator);
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+        Integer start = (page-1)*size;
+        List<Question> questions = questionMapper.findQuestionByUserId(start, size, userId);
+        User user = userMapper.findByCreator(userId);
+        QuestionDTO questionDTO ;
+        PaginationDTO paginationDTO = new PaginationDTO();
+        for (Question question : questions) {
+            questionDTO = new QuestionDTO();
+            questionDTO.setQuestion(question);
+            questionDTO.setUser(user);
+            questionDTOS.add(questionDTO);
+        }
+        paginationDTO.setContent(questionDTOS);
+        paginationDTO.setPaginationDTO(totalCount,page,size);
+        return paginationDTO;
+    }
+
+    @Override
+    public Question findQuestionById(Integer id) {
+        return questionMapper.findQuestionById(id);
+    }
+
+    @Override
+    public void update(Question question) {
+        questionMapper.update(question);
+    }
+
 }

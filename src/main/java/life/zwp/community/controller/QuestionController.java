@@ -1,5 +1,8 @@
 package life.zwp.community.controller;
 
+import life.zwp.community.dto.PaginationDTO;
+import life.zwp.community.model.User;
+import life.zwp.community.service.QuestionService;
 import life.zwp.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,11 +23,18 @@ public class QuestionController extends BaseController{
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private QuestionService questionService;
     @GetMapping("/questions")
     public String myQuestion(HttpServletRequest request, HttpServletResponse response, Model model,
                              @RequestParam(value = "page",defaultValue = "1") Integer page,
                              @RequestParam(value = "size",defaultValue = "10") Integer size){
         getUserFormSession(request);
+        //获取我发布的问题
+        User user = (User)request.getSession().getAttribute("user");
+        Integer userId = user.getId();
+        PaginationDTO paginationDTO = questionService.findQuestionByUserId(page,size,userId);
+        model.addAttribute("paginationDTO",paginationDTO);
         return "questions";
     }
 }

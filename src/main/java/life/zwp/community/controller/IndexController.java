@@ -24,6 +24,7 @@ public class IndexController extends BaseController{
                         @RequestParam(value = "size",defaultValue = "10") Integer size){
         getUserFormSession(request);
         //获取首页问题列表,和发布用户头像
+        //userId =0 ,查询所有人的问题
         PaginationDTO paginationDTO =  questionService.findQuestion(page,size);
         model.addAttribute("paginationDTO",paginationDTO);
         return "index";

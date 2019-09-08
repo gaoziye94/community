@@ -1,5 +1,12 @@
 body {
-    background-color: #efefef;
+    background: url(../img/bg.jpg) repeat;
+}
+.navbarhead {
+    position: relative;
+    z-index: 1001;
+    width: 100%;
+    min-height: 50px;
+    background-color: #499ef3;
 }
 .main {
     margin: 30px;
@@ -17,4 +24,8 @@ body {
     font-size: 12px;
     font-weight: normal;
     color: #999;
+}
+.container {
+    margin: auto !important;
+    max-width: 2500px !important;
 }

@@ -5,7 +5,10 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 分页数据
+ * @param <T>
+ */
 @Data
 public class PaginationDTO<T> {
     /** 内容 */
@@ -22,11 +25,14 @@ public class PaginationDTO<T> {
     private Integer page;
     /**总页数**/
     private Integer totalPage;
+    /**总条数数**/
+    private Integer totalCount;
     /**分页数据 存放分页数字**/
     private  List<Integer> pages = new ArrayList<Integer>();
 
 
-    public void setPaginationDTO(Integer totalCount, Integer cnpage, Integer size) {
+    public void setPaginationDTO(Integer totalCount1, Integer cnpage, Integer size) {
+        totalCount = totalCount1;
         page = cnpage;
 //        总页数
         totalPage = totalCount % size ==0 ?( totalCount/size) : (totalCount/size +1);

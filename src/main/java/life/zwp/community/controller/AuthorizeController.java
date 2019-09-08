@@ -39,7 +39,7 @@ public class AuthorizeController {
 
     @GetMapping("/account/github/login")
     public String githubLogin() {
-        return "redirect:https://github.com/login/oauth/authorize?client_id=eaf760769d322e005e06&redirect_uri=http://localhost:9090/callback&scope=user&state=1";
+        return "redirect:https://github.com/login/oauth/authorize?client_id="+clientId+"&redirect_uri="+redirectUri+"&scope=user&state=1";
     }
 
 

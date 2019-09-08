@@ -29,4 +29,27 @@ public interface QuestionService {
      * @param size
      */
     PaginationDTO findQuestion(Integer page, Integer size);
+
+
+    /**
+     * 查询某个人的所有问题
+     * @param page
+     * @param size
+     * @param userId
+     * @return
+     */
+    PaginationDTO findQuestionByUserId(Integer page, Integer size, Integer userId);
+
+    /**
+     * 根据问题id查找问题
+     * @param id
+     * @return
+     */
+    Question findQuestionById(Integer id);
+
+    /**
+     * 更新问题，根据id
+     * @param question
+     */
+    void update(Question question);
 }
