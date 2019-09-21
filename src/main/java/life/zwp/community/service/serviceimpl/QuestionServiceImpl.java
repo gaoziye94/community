@@ -1,5 +1,6 @@
 package life.zwp.community.service.serviceimpl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import life.zwp.community.dto.PaginationDTO;
 import life.zwp.community.dto.QuestionDTO;
@@ -94,7 +95,29 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionDTO findQuestionDTOById(Integer id) {
         QuestionDTO questionDTO = new QuestionDTO();
+        Question question = new Question();
+        User user = new User();
         Map<Object,Object> questionDTOMap = questionMapper.findQuestionMapById(id);
+        question.setId(Integer.valueOf(questionDTOMap.get("id").toString()));
+        question.setCreator(Integer.valueOf(questionDTOMap.get("creator").toString()));
+        question.setTitle(questionDTOMap.get("title").toString());
+        question.setDescription(questionDTOMap.get("description").toString());
+        //取第一个标签
+        String[] tags = questionDTOMap.get("tags").toString().split("，");
+        String tag = tags[0];
+        question.setTags(tag);
+        question.setCommentCount(Integer.valueOf(questionDTOMap.get("comment_count").toString()));
+        question.setViewCount(Integer.valueOf(questionDTOMap.get("view_count").toString()));
+        question.setLikeCount(Integer.valueOf(questionDTOMap.get("like_count").toString()));
+        question.setGmtCreate(Long.valueOf(questionDTOMap.get("gmt_create").toString()));
+        question.setGmtModified(Long.valueOf(questionDTOMap.get("gmt_modified").toString()));
+
+        user.setName(questionDTOMap.get("name").toString());
+        user.setHeadUrl(questionDTOMap.get("head_url").toString());
+        user.setBio(questionDTOMap.get("bio").toString());
+        user.setAccountId(questionDTOMap.get("account_id").toString());
+        questionDTO.setUser(user);
+        questionDTO.setQuestion(question);
         return questionDTO;
     }
 

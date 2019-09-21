@@ -6,7 +6,48 @@ body {
     z-index: 1001;
     width: 100%;
     min-height: 50px;
-    background-color: #499ef3;
+    background: #499ef3;
+    color: white !important;
+}
+.navbar {
+     margin-bottom: 0px;
+}
+.navbar-default .navbar-nav>li>a {
+    /*color: #777;*/
+    color: white;
+}
+.navbar-default .navbar-brand {
+    /*color: #777;*/
+    color: white;
+}
+.aw-main-content {
+    padding: 20px;
+    /*border-right: 1px solid #e6e6e6;*/
+}
+em {
+    font-style: normal;
+}
+.aw-question-tags {
+    display: inline-block;
+    padding: 0 5px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #f2f2f2;
+    font-size: 12px;
+    color: #999;
+}
+.community-tag {
+    text-decoration-line: none;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    line-height: 16px;
+    padding: 2px 5px;
+    background-color: #99cfff;
+    font-size: 12px;
+    color: #fff !important;
+    border-radius: 4px;
+    margin: 4px;
 }
 .main {
     margin: 30px;

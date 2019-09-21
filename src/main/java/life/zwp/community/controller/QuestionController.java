@@ -28,8 +28,9 @@ public class QuestionController {
     @GetMapping("")
     public String detail( Model model,@RequestParam(value = "id") Integer id) {
 
-       // QuestionDTO questionDTO = questionService.findQuestionDTOById(id);
-        model.addAttribute("name",id);
+        QuestionDTO questionDTO = questionService.findQuestionDTOById(id);
+//        model.addAttribute("name",id);
+        model.addAttribute("questionDTO",questionDTO);
         return "question";
     }
 

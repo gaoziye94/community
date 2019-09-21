@@ -14,15 +14,41 @@
 <div th:insert="~{head :: headnavbar}"></div>
 <div class="container-fluid main container">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 rightBox">
-            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h2>
-            <span th:text="${name}"></span>
+        <div class="col-lg-9 col-md-12 col-sm-12 aw-main-content">
+            <h2 th:text="${questionDTO.question.title}">发起</h2>
+            <em class="text-color-999">	<a class="aw-question-tags" href="#" th:text="${questionDTO.question.tags}"> </a>
+                | 作者 <a class="aw-user-name" href="#" data-id="10792" th:text="${questionDTO.user.name}"></a>
+                | 发布于<span th:text="${#dates.format(questionDTO.question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> | 阅读数：<span th:text="${questionDTO.question.viewCount}"></span>
+                <a th:if="${ session.user !=null && questionDTO.user.accountId == session.user.accountId}" th:href="@{/publish(id=${questionDTO.question.id})}" class="community-menu">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                </a>
+            </em>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  th:text="${questionDTO.question.description}">
+
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+            <!--标签-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <span class="question-tag">
+                        <a href="/?page=1&amp;tag=java" class="community-tag" th:text="${questionDTO.question.tags}"></a>
+                    </span>
+            </div>
         </div>
-        <div class="col-lg-3 col-md-3 aw-side-bar hidden-xs hidden-sm">
-            <h3>问题发起指南</h3>
-            • 问题标题: 请用精简的语言描述您发布的问题，不超过25字 <br>
-            • 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料<br>
-            • 选择标签: 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 aw-main-content">
+            <h3>发起人</h3>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" th:src="${questionDTO.user.headUrl}" alt="...">
+                    </a>
+                </div>
+                <div class="media-body media-middle">
+                    <span th:text="${questionDTO.user.name}"></span>
+                </div>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+            <h4>相关问题</h4>
         </div>
     </div>
 </div>

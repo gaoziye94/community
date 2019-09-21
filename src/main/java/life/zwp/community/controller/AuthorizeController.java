@@ -92,4 +92,22 @@ public class AuthorizeController {
             return "redirect:/";
         }
     }
+
+    /**
+     * 退出登录，删除cookie和session
+     * @return
+     */
+    @GetMapping("/logout")
+    public String loginOut(HttpServletRequest request,HttpServletResponse response){
+        //删除session
+        request.getSession().removeAttribute("user");
+        //删除cookie
+        Cookie cookie = new Cookie("token",null);//cookie名字要相同
+        cookie.setMaxAge(0); //
+        cookie.setPath(request.getContextPath());  // 相同路径
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
+
 }
