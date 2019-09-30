@@ -29,7 +29,7 @@ public class PublishController extends BaseController{
     private UserService userService;
     @GetMapping("")
     public String publish(HttpServletRequest request, HttpServletResponse response,
-                        Model model,  @RequestParam(value = "id",defaultValue = "0") Integer id){
+                        Model model,  @RequestParam(value = "id",defaultValue = "0") Long id){
         //根据id 回显问题
         Question question = questionService.findQuestionById(id);
         model.addAttribute("question",question);
@@ -42,7 +42,7 @@ public class PublishController extends BaseController{
      */
     @PostMapping("")
     public String create(
-            @RequestParam("id") Integer id,
+            @RequestParam("id") Long id,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("tags") String tags,
@@ -55,7 +55,7 @@ public class PublishController extends BaseController{
             return "publish";
         }
         //当前用户id
-        int creator = user.getId();
+        Long creator = user.getId();
         Question question = new Question();
         if(id ==null){
             question.setTitle(title);
@@ -86,6 +86,9 @@ public class PublishController extends BaseController{
             question.setCreator(creator);
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            question.setLikeCount(0);
             questionService.create(question);
         } else {
             //不为空，为编辑,先查询出这个问题

@@ -78,6 +78,7 @@ public class AuthorizeController {
                 user.setHeadUrl(userInfo.getAvatarUrl());
                 user.setBio(userInfo.getBio());
                 user.setName(userInfo.getName());
+                user.setAccountType(1);
                 user.setGmtCreate(System.currentTimeMillis());
                 user.setGmtModified(user.getGmtCreate());
                 userService.insert(user);

@@ -14,6 +14,10 @@ public class WebConfig implements WebMvcConfigurer {
         return new SessionInterceptor();
     }
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getTokenInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(getTokenInterceptor())
+                .excludePathPatterns("/static/**") //不拦截静态资源
+                .excludePathPatterns("/login")
+                .excludePathPatterns("/logout")
+                .addPathPatterns("/**");
     }
 }

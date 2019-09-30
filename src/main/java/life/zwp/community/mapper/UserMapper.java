@@ -27,7 +27,7 @@ public interface UserMapper {
      * @param creator
      * @return
      */
-    User findByCreator(Integer creator);
+    User findByCreator(Long creator);
 
     /**
      * 根据创建者AccountId，查询这个用户

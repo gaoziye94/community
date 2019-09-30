@@ -58,8 +58,8 @@ em {
     margin-bottom: 15px;
 }
 .media-object {
-    height: 45px;
-    width: 45px;
+    height: 45px !important;
+    width: 45px!important;
 }
 .text-desc {
     font-size: 12px;
@@ -71,3 +71,35 @@ em {
     max-width: 2500px !important;
 }
 a:focus{text-decoration: none}
+.jumbotron {
+    text-align: center;
+}
+.reply {
+    margin: 10px 0;
+    float: right;
+}
+.aw-nav-tabs {
+    position: relative;
+    z-index: 1;
+    min-height: 63px;
+    min-height: 32px\9;
+    margin: 0;
+    padding: 30px 20px 0;
+    border-color: #e6e6e6;
+}
+.aw-nav-tabs.active > li {
+    float: right;
+}
+.aw-nav-tabs > li {
+    margin: 0 4px 0 0;
+    font-size: 14px;
+}
+.comment {
+    padding-left: 55px;
+}
+.mod-body {
+    margin-top: 30px;
+}
+#commentArea {
+    margin-top: 30px;
+}

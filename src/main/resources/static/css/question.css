@@ -1,0 +1,53 @@
+ .mod-footer {
+    min-height: 28px;
+    line-height: 28px;
+    margin-top: 10px;
+    font-size: 12px;
+     position: relative;
+     width: 100%;
+     padding-left: 50px;
+}
+ .comment-list {
+     border-bottom: 1px solid #f7f0f0;
+     margin: 10px 0;
+ }
+ .commentcontent {
+     margin: 10px 0;
+ }
+
+ .commentTime {
+     font-size: large;
+     margin: 10px;
+     float: right;
+ }
+.mod-footer .glyphicon {
+    font-size: large;
+    padding: 5px;
+    width: 40px;
+    border: 1px solid #ededf3;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #999;
+}
+ .mod-footer .glyphicon:hover {
+     background: #5cacff;
+ }
+ .collapse {
+     margin: 10px 0 10px 50px;
+ }
+ .collapse.in {
+     display: block;
+     margin: 10px 0 10px 50px;
+ }
+ .well {
+     background-color: white !important;
+     background-image: none;
+ }
+ .replyForm {
+     margin: 10px 0;
+ }
+ .navbar-collapse {
+     margin: 0 !important;
+ }
+

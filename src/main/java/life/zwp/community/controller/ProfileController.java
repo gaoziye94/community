@@ -35,7 +35,7 @@ public class ProfileController extends BaseController{
         PaginationDTO paginationDTO = new PaginationDTO();
         //获取我发布的问题
         User user = (User)request.getSession().getAttribute("user");
-        Integer userId = user.getId();
+        Long userId = user.getId();
         model.addAttribute("section",action);
         if("questions".equals(action)){
             model.addAttribute("sectionName","我的提问");

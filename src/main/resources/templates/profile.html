@@ -25,11 +25,11 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${questionDTO.question.title}"></h4>
+                    <h4 class="media-heading"><a  th:href="@{/question(id=${questionDTO.question.id})}" th:text="${questionDTO.question.title}"></a></h4>
                     <span th:text="${questionDTO.question.description}"></span><br>
                     <span class="text-desc">
                             <span th:text="${questionDTO.question.commentCount}"></span> 个评论 • <span th:text="${questionDTO.question.viewCount}"></span>  次浏览
-                            • <span>1</span>  小时前 • <span th:text="${#dates.format(questionDTO.question.gmtModified, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                            • <span th:text="${#dates.format(questionDTO.question.gmtModified, 'yyyy-MM-dd HH:mm:ss')}"></span>
                         <a th:href="@{/publish(id=${questionDTO.question.id})}" class="community-menu">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
                         </a>

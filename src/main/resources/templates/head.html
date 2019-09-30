@@ -5,7 +5,7 @@
 <body>
 
 <div th:fragment="headnavbar">
-    <nav class="navbar navbar-default navbarhead">
+    <nav class="navbar navbar-default navbarhead col-lg-12 col-md-12 col-sm-12">
         <div class="container-fluid container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -15,7 +15,7 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse col-lg-12 col-md-12 col-sm-12" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="话题">
@@ -34,7 +34,8 @@
                         </ul>
                     </li>
                     <li th:if="${session.user == null }">
-                        <a href="account/github/login">登录</a>
+                        <!--<a href="account/github/login">登录</a>-->
+                        <a href="/account/login">登录</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->

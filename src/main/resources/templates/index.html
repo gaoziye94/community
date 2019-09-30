@@ -28,10 +28,10 @@
             <div class="col-lg-9 col-md-12 col-sm-12 ">
                 <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h3>
                 <!--导航栏-->
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a href="#">Home</a></li>
-                    <li role="presentation"><a href="#">Profile</a></li>
-                    <li role="presentation"><a href="#">Messages</a></li>
+                <ul th:if="${paginationDTO.content.size() != 0}" class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#">全部</a></li>
+                    <li role="presentation"><a href="#">最新</a></li>
+                    <li role="presentation"><a href="#">最热</a></li>
                 </ul>
                 <!--内容-->
                 <div class="media" th:if="${paginationDTO.content != null}" th:each="QuestionDTO:${paginationDTO.content}">
@@ -44,13 +44,15 @@
                         <h4 class="media-heading"><a  th:href="@{/question(id=${QuestionDTO.question.id})}" th:text="${QuestionDTO.question.title}"></a></h4>
                        <span th:text="${QuestionDTO.question.description}"></span><br>
                         <span class="text-desc">
+                            <a class="aw-question-tags" href="#" th:text="${#strings.arraySplit(QuestionDTO.question.tags, '，')[0]}"></a>
                             <span th:text="${QuestionDTO.question.commentCount}"></span> 个评论 • <span th:text="${QuestionDTO.question.viewCount}"></span>  次浏览
-                            • <span>1</span>  小时前 • <span th:text="${#dates.format(QuestionDTO.question.gmtModified, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                             • <span th:text="${#dates.format(QuestionDTO.question.gmtModified, 'yyyy-MM-dd HH:mm:ss')}"></span>
                         </span>
                     </div>
                 </div>
+                <div th:if="${paginationDTO.content.size() == 0}">暂无数据~~</div>
                 <!--分页-->
-                <div class="mod-footer">
+                <div class="mod-footer" th:if="${paginationDTO.content.size() != 0}">
                     <div class="page-control">
                         <ul class="pagination pull-right">
                             <li th:if="${paginationDTO.showFirstPage}"><a th:href="@{/(page=1)}">&lt;&lt;</a>

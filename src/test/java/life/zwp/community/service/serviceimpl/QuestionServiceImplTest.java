@@ -23,7 +23,7 @@ public class QuestionServiceImplTest {
             question.setTitle("标题"+i);
             question.setDescription("内容"+i);
             question.setTags("测试，测试1，测试2");
-            question.setCreator(9);
+            question.setCreator(9L);
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             questionMapper.insert(question);

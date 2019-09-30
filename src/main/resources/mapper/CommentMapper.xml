@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="life.zwp.community.mapper.CommentMapper">
+    <resultMap type="life.zwp.community.model.Comment" id="comment">
+        <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="type" property="type" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="commentator" property="commentator" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="content" property="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="like_count" property="likeCount" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="reply_count" property="replyCount" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="gmt_create" property="gmtCreate" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="gmt_modified" property="gmtModified" javaType="java.lang.Long" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <update id="update"  parameterType="life.zwp.community.model.Comment">
+        UPDATE comment
+        <trim prefix="set" suffixOverrides=",">
+            <if test="content!=null">content=#{content},</if>
+            <if test="likeCount!=null">like_count=like_count + #{likeCount},</if>
+            <if test="replyCount!=null">reply_count=reply_count + #{replyCount},</if>
+            <if test="gmtCreate!=null">gmt_create=#{gmtCreate},</if>
+            <if test="gmtModified!=null">gmt_modified=#{gmtModified},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+</mapper>

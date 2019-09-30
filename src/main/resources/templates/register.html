@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册页</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <!--<link rel="stylesheet" href="/css/common.css">-->
+    <script src="/js/jquery.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+
+<div id="wrapper">
+    <div class="aw-login-box">
+        <h2 style="text-align: center">腾讯邮箱注册</h2>
+        <div class="mod-body clearfix">
+            <div class="content pull-left">
+                <form id="login_form" method="post" onsubmit="return false" action="">
+                    <input type="hidden" name="return_url" value="https://elasticsearch.cn/">
+                    <ul>
+                        <li>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">@</span>
+                                <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+        <div class="mod-footer">
+            <a href="/">游客访问</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

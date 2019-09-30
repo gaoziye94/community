@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="life.zwp.community.mapper.QuestionMapper">
     <resultMap type="life.zwp.community.model.Question" id="question">
-        <id column="id" property="id" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
         <id column="title" property="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <id column="description" property="description" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <id column="creator" property="creator"  javaType="java.lang.Integer" jdbcType="NUMERIC"/>
+        <id column="creator" property="creator"  javaType="java.lang.Long" jdbcType="BIGINT"/>
         <id column="comment_count" property="commentCount" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
         <id column="view_count" property="viewCount" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
         <id column="like_count" property="likeCount" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
@@ -15,7 +15,7 @@
     </resultMap>
 
 
-    <select id="count" parameterType="Integer" resultType="Integer">
+    <select id="count" parameterType="Long" resultType="Integer">
         select count(1) from question
         <where>
             <if test="creator!=0">
@@ -38,7 +38,12 @@
         WHERE id=#{id}
     </update>
 
-    <select id="findQuestionMapById" parameterType="Integer" resultType="java.util.Map">
+    <update id="updateViewCount"  parameterType="life.zwp.community.model.Question">
+        UPDATE question set view_count = view_count + #{viewCount}  WHERE id=#{id}
+    </update>
+
+
+    <select id="findQuestionMapById" parameterType="Long" resultType="java.util.Map">
         SELECT
             q.*,
             u.*
