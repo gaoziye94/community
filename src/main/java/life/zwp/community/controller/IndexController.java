@@ -1,6 +1,8 @@
 package life.zwp.community.controller;
 
 import life.zwp.community.dto.PaginationDTO;
+import life.zwp.community.model.User;
+import life.zwp.community.service.NotificationService;
 import life.zwp.community.service.QuestionService;
 import life.zwp.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class IndexController extends BaseController{
     private UserService userService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private NotificationService notificationService;
     @GetMapping("/")
     public String index(HttpServletRequest request, HttpServletResponse response, Model model,
                         @RequestParam(value = "page",defaultValue = "1") Integer page,
@@ -26,6 +30,8 @@ public class IndexController extends BaseController{
         //userId =0 ,查询所有人的问题
         PaginationDTO paginationDTO =  questionService.findQuestion(page,size);
         model.addAttribute("paginationDTO",paginationDTO);
+        //我的未读消息
+        unreadCount(request,model);
         return "index";
     }
 

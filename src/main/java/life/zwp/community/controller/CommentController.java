@@ -48,7 +48,7 @@ public class CommentController {
         }
         //判断评论是否为空，为空给出提示
         if(comment == null || !StringUtils.isNoneBlank(commentDTO.getContent())){
-            return Message.commonError(CustomizeErrorCode.COMMENT_CONTENT_ISBLANK.getCode(),CustomizeErrorCode.COMMENT_CONTENT_ISBLANK.getMessage());
+            return Message.commonError(CustomizeErrorCode.COMMENT_CONTENT_IS_BLANK.getCode(),CustomizeErrorCode.COMMENT_CONTENT_IS_BLANK.getMessage());
         }
         comment.setCommentator(user.getId());
 //        comment.setCommentator(15L);

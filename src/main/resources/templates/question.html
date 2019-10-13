@@ -8,14 +8,18 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
     <link rel="stylesheet" href="/css/question.css">
+    <link rel="stylesheet" href="/editormd/css/editormd.preview.css" />
     <script src="/js/jquery.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/comment.js" type="application/javascript"></script>
     <script src="/js/utils.js" type="application/javascript"></script>
+    <script src="/editormd/editormd.js"></script>
+    <script src="/editormd/lib/marked.min.js"></script>
+    <script src="/editormd/lib/prettify.min.js"></script>
 </head>
 <body>
 <div th:insert="~{head :: headnavbar}"></div>
-<div class="container-fluid main container">
+<div class="container-fluid main container" style="height: auto;">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 aw-main-content">
             <h2 th:text="${questionDTO.question.title}">发起</h2>
@@ -27,23 +31,30 @@
                 </a>
             </em>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  th:text="${questionDTO.question.description}">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div id="test-markdown-view">
+                    <textarea style="display:none;" th:text="${questionDTO.question.description}">
 
+                    </textarea>
+                </div>
             </div>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
             <!--标签-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <span class="question-tag" th:each="tag:${#strings.arraySplit(questionDTO.question.tags, '，')}">
+<!--
                         <a href="#" class="community-tag" th:text="${tag}"></a>
+-->
+                         <a class="label label-info community-tag" href="#"><span class="glyphicon glyphicon-tags"  th:text="${tag}"></span></a>
                     </span>
             </div>
             <!--评论列表-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  id="commentList">
                 <div class="mod-head">
                     <ul class="nav nav-tabs aw-nav-tabs active">
-                        <li><a href="https://elasticsearch.cn/question/8409?uid=focus">关注的人</a></li>
-                        <li><a href="https://elasticsearch.cn/question/8409?sort_key=add_time&amp;sort=ASC">时间 <i class="icon icon-up"></i></a></li>
-                        <li class="active"><a href="https://elasticsearch.cn/question/8409&amp;sort_key=agree_count&amp;sort=DESC">票数</a></li>
+                        <li><a href="#">关注的人</a></li>
+                        <li><a href="#">时间 <i class="icon icon-up"></i></a></li>
+                        <li class="active"><a href="#">票数</a></li>
                         <h2 class="hidden-xs"><span th:text="${questionDTO.question.commentCount}"></span> 个回复</h2>
                     </ul>
                 </div>
@@ -121,13 +132,20 @@
             </div>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
             <h4>相关问题</h4>
+            <ul th:each="relate:${relatedQuestions}">
+                <li ><a  th:href="@{/question(id=${relate.id})}" th:text="${relate.title}"></a></li>
+            </ul>
         </div>
     </div>
 </div>
-<script>
-    $().ready(function () {
-
-    })
+<script type="text/javascript">
+    $(function() {
+        var testView = editormd.markdownToHTML("test-markdown-view", {
+            // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
+            // htmlDecode : true,  // Enable / disable HTML tag encode.
+            // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+        });
+    });
 </script>
 </body>
 </html>

@@ -13,7 +13,7 @@
 </head>
 <body>
 <div th:insert="~{head :: headnavbar}"></div>
-<div class="container" style="margin: 30px; background: white;">
+<div class="container" style="margin: 30px; background: white;height: auto;">
     <!--导航栏-->
     <ul class="nav nav-pills" style="margin: 30px 0px">
         <li role="presentation" class="active"><a href="#">Home</a></li>
@@ -41,10 +41,13 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading"><a  th:href="@{/question(id=${QuestionDTO.question.id})}" th:text="${QuestionDTO.question.title}"></a></h4>
+                        <h4 class="media-heading"><a  th:href="@{'/question/'+${QuestionDTO.question.id}}" th:text="${QuestionDTO.question.title}"></a></h4>
                        <span th:text="${QuestionDTO.question.description}"></span><br>
                         <span class="text-desc">
+<!--
                             <a class="aw-question-tags" href="#" th:text="${#strings.arraySplit(QuestionDTO.question.tags, '，')[0]}"></a>
+-->
+                            <a class="label label-info" href="#"><span class="glyphicon glyphicon-tags"  th:text="${#strings.arraySplit(QuestionDTO.question.tags, '，')[0]}"></span></a>
                             <span th:text="${QuestionDTO.question.commentCount}"></span> 个评论 • <span th:text="${QuestionDTO.question.viewCount}"></span>  次浏览
                              • <span th:text="${#dates.format(QuestionDTO.question.gmtModified, 'yyyy-MM-dd HH:mm:ss')}"></span>
                         </span>

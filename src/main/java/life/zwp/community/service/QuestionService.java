@@ -74,4 +74,26 @@ public interface QuestionService {
      * @return
      */
     List<Map<String,Object>> commentList(Long id, Integer type);
+
+    /**
+     * 相关问题
+     * @param id
+     * @param tags
+     * @return
+     */
+    List<Question> relatedQuestion(Long id, String tags);
+
+    /**
+     * 删除问题，根据id
+     * @param question
+     * @return
+     */
+    int deleteQuestion(Question question);
+
+    /**
+     * 查询我的问题数量
+     * @param userId
+     * @return
+     */
+    Integer count(Long userId);
 }

@@ -1,5 +1,6 @@
 package life.zwp.community.mapper;
 
+import life.zwp.community.dto.QuestionDTO;
 import life.zwp.community.model.Question;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
@@ -79,4 +80,21 @@ public interface QuestionMapper {
      */
     @Update("update question set comment_count = comment_count + #{commentCount} where id = #{id}")
     void incCommentCount(Question question);
+
+    /**
+     * 查询相关问题
+     * @param id
+     * @param tag
+     * @return
+     */
+    @Select("select *  from question where tags REGEXP #{tag} and id !=#{id}")
+    List<Question> relatedQuestion(@Param("id") Long id, @Param("tag")String tag);
+
+    /**
+     * 删除问题
+     * @param question
+     * @return
+     */
+    @Delete("delete from question where id = #{id}")
+    int delete(Question question);
 }

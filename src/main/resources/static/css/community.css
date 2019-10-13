@@ -1,4 +1,4 @@
-body {
+html,body {
     background: url(../img/bg.jpg) repeat;
 }
 .navbarhead {
@@ -102,4 +102,29 @@ a:focus{text-decoration: none}
 }
 #commentArea {
     margin-top: 30px;
+}
+.glyphicon-tags:before {
+    padding-right: 5px;
+}
+.label-info {
+    background-color: #5bc0de !important;
+    display: inline-block;
+    margin: 10px 5px;
+}
+/*.glyphicon {
+    margin: 8px 0;
+}*/
+.tags {
+    display: none;
+}
+.mod-footer {
+    overflow: hidden;
+}
+.navbar-collapse {
+    width:90%;
+}
+.unread {
+    float: right;
+    color: white;
+    background: red;
 }

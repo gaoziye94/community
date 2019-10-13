@@ -1,9 +1,12 @@
 package life.zwp.community.controller;
 
+import life.zwp.community.cache.TagCache;
 import life.zwp.community.model.Question;
 import life.zwp.community.model.User;
+import life.zwp.community.service.NotificationService;
 import life.zwp.community.service.QuestionService;
 import life.zwp.community.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +30,22 @@ public class PublishController extends BaseController{
     private QuestionService questionService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private NotificationService notificationService;
     @GetMapping("")
     public String publish(HttpServletRequest request, HttpServletResponse response,
                         Model model,  @RequestParam(value = "id",defaultValue = "0") Long id){
         //根据id 回显问题
         Question question = questionService.findQuestionById(id);
         model.addAttribute("question",question);
+        //标签
+        model.addAttribute("tagCategorys", TagCache.getTags());
+
+        //我的未读消息
+        unreadCount(request,model);
         return "publish";
     }
+
 
     /**
      * 发布问题，并返回当前页面
@@ -68,6 +79,8 @@ public class PublishController extends BaseController{
             question = questionService.findQuestionById(id);
         }
         model.addAttribute("question",question);
+        //标签
+        model.addAttribute("tagCategorys", TagCache.getTags());
         if(title ==null || title == ""){
             model.addAttribute("error","标题不能为空");
             return "publish";
@@ -78,6 +91,11 @@ public class PublishController extends BaseController{
         }
         if(tags ==null || tags == ""){
             model.addAttribute("error","标签不能为空");
+            return "publish";
+        }
+        String invalid = TagCache.filterInvalid(tags);
+        if(StringUtils.isNoneBlank(invalid)){
+            model.addAttribute("error","标签不合法："+invalid);
             return "publish";
         }
         //判断是新增还是编辑。有无id

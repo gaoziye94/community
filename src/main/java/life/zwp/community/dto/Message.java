@@ -35,6 +35,10 @@ public class Message {
     private Object content;
 
 
+    public static Message MESSAGE_SAVE_SUCCESS = new Message(Type.success, "10000", "保存成功");
+    public static Message MESSAGE_DEL_SUCCESS = new Message(Type.success, "10000", "删除成功");
+    public static Message MESSAGE_DEL_ERROR = new Message(Type.error, "10000", "删除失败");
+
     public static Message LOGIN_SUCCESS = new Message(Type.success, "10000", "登录成功");
     public static Message NO_LOGIN = new Message(Type.error, "20000", "当前操作需要登录");
 
@@ -57,9 +61,14 @@ public class Message {
         return new Message(Type.success, code, msg);
     }
 
-    //返回成功，携带数据
+    //返回成功
     public static Message commonSuccess(){
         Message msg =  Message.success("10000", "成功");
+        return msg;
+    }
+    //返回失败
+    public static Message commonError(){
+        Message msg =  Message.error("10000", "失败");
         return msg;
     }
     public static Message commonSuccess(Object data){
