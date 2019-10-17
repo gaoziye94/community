@@ -1,6 +1,7 @@
 package life.zwp.community.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import life.zwp.community.dto.PaginationDTO;
 import life.zwp.community.dto.QuestionDTO;
 import life.zwp.community.exception.CustomizeErrorCode;
@@ -40,13 +41,29 @@ public class QuestionServiceImpl implements QuestionService {
         return questionMapper.findAll();
     }
 
+
     @Override
-    public PaginationDTO findQuestion(Integer page, Integer size) {
+    public PaginationDTO findQuestion(Integer page, Integer size, String search) {
         List<QuestionDTO> questionDTOS = new ArrayList<>();
-        List<Question> questions = findAll(page, size);
-//        总数据
+//        List<Question> questions = findAll(page, size);
+////        总数据
+//        Long creator = 0L;
+//        Integer totalCount = questionMapper.count(creator);
+//        QuestionDTO questionDTO ;
+//        User user;
+//        PaginationDTO paginationDTO = new PaginationDTO();
+//        for (Question question : questions) {
+//            questionDTO = new QuestionDTO();
+//            questionDTO.setQuestion(question);
+//            //根据问题的发布人查询这个用户
+//            creator = question.getCreator();
+//            user = userMapper.findByCreator(creator);
+//            questionDTO.setUser(user);
+//            questionDTOS.add(questionDTO);
+//        }
         Long creator = 0L;
-        Integer totalCount = questionMapper.count(creator);
+        PageHelper.startPage(page,size);
+        List<Question> questions = questionMapper.findAllByTitle(search);
         QuestionDTO questionDTO ;
         User user;
         PaginationDTO paginationDTO = new PaginationDTO();
@@ -59,6 +76,9 @@ public class QuestionServiceImpl implements QuestionService {
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
+        //最后一步,获取分页信息
+        PageInfo info = new PageInfo<>(questions);
+        Integer totalCount =  new Long(info.getTotal()).intValue();
         paginationDTO.setContent(questionDTOS);
         paginationDTO.setPaginationDTO(totalCount,page,size);
         return paginationDTO;
@@ -116,9 +136,21 @@ public class QuestionServiceImpl implements QuestionService {
         question.setGmtCreate(Long.valueOf(questionDTOMap.get("gmt_create").toString()));
         question.setGmtModified(Long.valueOf(questionDTOMap.get("gmt_modified").toString()));
 
-        user.setName(questionDTOMap.get("name").toString());
-        user.setHeadUrl(questionDTOMap.get("head_url").toString());
-        user.setBio(questionDTOMap.get("bio").toString());
+        String name = "";
+        String headUrl = "";
+        String bio = "";
+        if(questionDTOMap.get("name") !=null){
+            name =questionDTOMap.get("name").toString();
+        }
+        if(questionDTOMap.get("head_url") !=null){
+            headUrl = questionDTOMap.get("head_url").toString();
+        }
+        if(questionDTOMap.get("bio") !=null){
+            bio = questionDTOMap.get("bio").toString();
+        }
+        user.setBio(bio);
+        user.setName(name);
+        user.setHeadUrl(headUrl);
         user.setAccountId(questionDTOMap.get("account_id").toString());
         questionDTO.setUser(user);
         questionDTO.setQuestion(question);

@@ -28,11 +28,11 @@
             <div class="col-lg-9 col-md-12 col-sm-12 ">
                 <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h3>
                 <!--导航栏-->
-                <ul th:if="${paginationDTO.content.size() != 0}" class="nav nav-tabs">
+               <!-- <ul th:if="${paginationDTO.content.size() != 0}" class="nav nav-tabs">
                     <li role="presentation" class="active"><a href="#">全部</a></li>
                     <li role="presentation"><a href="#">最新</a></li>
                     <li role="presentation"><a href="#">最热</a></li>
-                </ul>
+                </ul>-->
                 <!--内容-->
                 <div class="media" th:if="${paginationDTO.content != null}" th:each="QuestionDTO:${paginationDTO.content}">
                     <div class="media-left media-middle">
@@ -42,7 +42,7 @@
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading"><a  th:href="@{'/question/'+${QuestionDTO.question.id}}" th:text="${QuestionDTO.question.title}"></a></h4>
-                       <span th:text="${QuestionDTO.question.description}"></span><br>
+                    <!--   <span th:text="${QuestionDTO.question.description}"></span><br>-->
                         <span class="text-desc">
 <!--
                             <a class="aw-question-tags" href="#" th:text="${#strings.arraySplit(QuestionDTO.question.tags, '，')[0]}"></a>
@@ -58,16 +58,16 @@
                 <div class="mod-footer" th:if="${paginationDTO.content.size() != 0}">
                     <div class="page-control">
                         <ul class="pagination pull-right">
-                            <li th:if="${paginationDTO.showFirstPage}"><a th:href="@{/(page=1)}">&lt;&lt;</a>
+                            <li th:if="${paginationDTO.showFirstPage}"><a th:href="@{/(search=${search},page=1)}">&lt;&lt;</a>
                             </li>
-                            <li th:if="${paginationDTO.showPrevPage}"><a th:href="@{/(page=${paginationDTO.page -1})}">&lt;</a>
+                            <li th:if="${paginationDTO.showPrevPage}"><a th:href="@{/(search=${search},page=${paginationDTO.page -1})}">&lt;</a>
                             </li>
                             <li th:each=" cupage : ${paginationDTO.pages}" th:class="${cupage == paginationDTO.page}? 'active' : ''">
-                                <a th:href="@{/(page=${cupage})}" th:text="${cupage}"></a>
+                                <a th:href="@{/(search=${search},page=${cupage})}" th:text="${cupage}"></a>
                             </li>
-                            <li th:if="${paginationDTO.showNextPage}"><a th:href="@{/(page=${paginationDTO.page +1})}">&gt;</a>
+                            <li th:if="${paginationDTO.showNextPage}"><a th:href="@{/(search=${search},page=${paginationDTO.page +1})}">&gt;</a>
                             </li>
-                            <li th:if="${paginationDTO.showEndPage}"><a th:href="@{/(page=${paginationDTO.totalPage})}">&gt;&gt;</a>
+                            <li th:if="${paginationDTO.showEndPage}"><a th:href="@{/(search=${search},page=${paginationDTO.totalPage})}">&gt;&gt;</a>
                             </li>
                         </ul>
                     </div>
@@ -75,6 +75,9 @@
             </div>
             <div class="col-lg-3 col-md-3 aw-side-bar hidden-xs hidden-sm">
                 <h3>最热话题</h3>
+                <ul th:each="relate:${relatedQuestions}">
+                    <li ><a  th:href="@{'/question/'+${relate.id}}" th:text="${relate.title}"></a></li>
+                </ul>
             </div>
         </div>
     </div>

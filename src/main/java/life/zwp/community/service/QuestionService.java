@@ -28,8 +28,9 @@ public interface QuestionService {
      * @return
      * @param page
      * @param size
+     * @param search
      */
-    PaginationDTO findQuestion(Integer page, Integer size);
+    PaginationDTO findQuestion(Integer page, Integer size, String search);
 
 
     /**

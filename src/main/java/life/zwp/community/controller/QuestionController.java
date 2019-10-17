@@ -1,12 +1,14 @@
 package life.zwp.community.controller;
 
+import com.alibaba.fastjson.JSON;
 import life.zwp.community.dto.Message;
 import life.zwp.community.dto.QuestionDTO;
-import life.zwp.community.model.Comment;
+import life.zwp.community.mapper.QuestionMapper;
 import life.zwp.community.model.Question;
-import life.zwp.community.model.User;
 import life.zwp.community.service.NotificationService;
 import life.zwp.community.service.QuestionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +23,11 @@ import java.util.Map;
 @RequestMapping("/question")
 public class QuestionController extends BaseController{
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private QuestionMapper questionMapper;
 
     @Autowired
     private NotificationService notificationService;
@@ -34,7 +39,6 @@ public class QuestionController extends BaseController{
     @GetMapping("/{id}")
     public String detail( HttpServletRequest request, HttpServletResponse response,
                           Model model,@PathVariable(name = "id") Long id) {
-
         QuestionDTO questionDTO = questionService.findQuestionDTOById(id);
 //        model.addAttribute("name",id);
 //        浏览数增加1
@@ -54,6 +58,7 @@ public class QuestionController extends BaseController{
         //获取相关问题，根据tags
         String tags = questionDTO.getQuestion().getTags();
         List<Question> relatedQuestions =  questionService.relatedQuestion(id,tags);
+//        logger.info(JSON.toJSONString(relatedQuestions));
         model.addAttribute("relatedQuestions",relatedQuestions);
 
         //我的未读消息
@@ -70,4 +75,13 @@ public class QuestionController extends BaseController{
         return (count == 1) ? Message.MESSAGE_DEL_SUCCESS: Message.MESSAGE_DEL_ERROR;
     }
 
+    @GetMapping("/test")
+    @ResponseBody
+    public List<Question> test(HttpServletRequest request, HttpServletResponse response, Model model,
+                                         @RequestParam(value = "page",defaultValue = "1") Integer page,
+                                         @RequestParam(value = "size",defaultValue = "10") Integer size,
+                                         @RequestParam(value = "search",required = false) String search){
+        List<Question> Questions = questionMapper.findAllByTitle(search);
+        return Questions;
+    }
 }

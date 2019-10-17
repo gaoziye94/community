@@ -97,4 +97,11 @@ public interface QuestionMapper {
      */
     @Delete("delete from question where id = #{id}")
     int delete(Question question);
+
+    /**
+     * 根据标题模糊查询
+     * @param search
+     * @return
+     */
+    List<Question> findAllByTitle(@Param("search")String search);
 }

@@ -78,6 +78,10 @@ public class CommentServiceImpl implements CommentService {
      * @param status
      */
     private void createNotifition(Long outerId, Long notifier,Long receiver,Integer type,Integer status,Long questionId) {
+        if(notifier == receiver){
+            //如果自己评论自己，不需要通知
+            return;
+        }
         Notification notification = new Notification();
         notification.setOuterId(outerId);
         notification.setNotifier(notifier);

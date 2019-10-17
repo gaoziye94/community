@@ -54,5 +54,17 @@
             q.id = #{id}
     </select>
 
+    <select id="findAllByTitle" parameterType="String" resultType="life.zwp.community.model.Question">
+        select
+            *
+        from question
+        <where>
+            <if test="search !=null">
+                and title like  "%"#{search}"%"
+            </if>
+        </where>
+        order by gmt_create desc
+    </select>
+
 
 </mapper>
